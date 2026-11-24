@@ -15,17 +15,13 @@ label is not graded.
 
 **GitHub username**
 
-[Your GitHub username, exactly as it appears on your profile - no @, no
-profile URL. Your comment upstream is identified by this name, and it is
-the only thing that ties it to you. Several students may plan the same
-house issue, so this is what keeps their comments off your score and
-yours off theirs.]
+jadinee
 
 **Plan comment**
 
-[Link to the comment where you posted your plan on the issue. Use the comment's own
-permalink. **Then paste the text of that comment underneath the link** — the pasted text is
-what this field is graded on, so copy across what you actually posted.]
+https://github.com/codepath/pathreview-ai301-fa26-s3/issues/64#issuecomment-7141617643
+
+I plan to update the sample text in `test_query_with_partial_overlap` so it matches three of the four query words. Right now it matches all four and gets a score of 1.0. I’ll rerun the same test from my reproduction and expect it to pass with a score of 0.75. Once it passes, I’ll remove the expected-failure marker and verify that it passes normally.
 
 ---
 
@@ -33,15 +29,30 @@ what this field is graded on, so copy across what you actually posted.]
 
 **Branch**
 
-[The name of the branch you built the change on, exactly as it appears in your fork. The
-naming shape is a type prefix, then the issue number, then a short description. **The issue
-number in the branch name must be the number of the issue you claimed** — a name carrying
-any other number does not satisfy this field.]
+fix/64-partial-overlap
 
 **Evidence**
 
-[Your Unit 2 reproduction steps re-run against the built change: the before, then the
-after. Paste both, including the commands you ran and their output.]
+I ran this command before and after the fix:
+
+```bash
+.venv/bin/python -m pytest -q --runxfail tests/unit/test_relevance_scorer.py::TestRelevanceScorer::test_query_with_partial_overlap
+```
+
+Before the fix, my Unit 2 output included:
+
+```text
+E       assert 1.0 < 0.9
+tests/unit/test_relevance_scorer.py:58: AssertionError
+1 failed in 0.10s
+```
+
+After the fix:
+
+```text
+.                                                                        [100%]
+1 passed in 0.04s
+```
 
 ## Eval iterations
 
@@ -50,30 +61,28 @@ fields.
 
 **Run history**
 
-[The agreement score of each run you did, in order. A single run is a complete answer if
-only one run occurred. **The last score in your list must match the agreement line in the
-`eval-run.txt` you committed** — that file is the record of your final run.]
+I ran the full eval once.
+
+```text
+agreement: 19/20 scored items  (bar: 18/20: PASS)
+```
 
 **Package analysis**
 
-[Pick one scored package (`pkg-01` through `pkg-20` — the four `calib-` packages are never
-scored). Name it by id, say what your rubric decided and what the gold label said, and
-explain why your rubric read it that way.]
+For `pkg-20`, my rubric said `accept`, and the expected result was `reject`. The comment followed the direction in the issue thread, which may explain why it passed my check. The repo says “All AI usage in any form must be disclosed,” and the comment left out that disclosure.
 
 **Check rationale**
 
-[Quote one check from the `rubric.md` you uploaded to `tools/plan-check/`, exactly as it reads now.
-Then say why it reads that way — what you revised to get there, or what you rejected in
-favour of it.]
+```text
+| Plan comment | Candidate plan comment, Thread highlights, and Repo facts | The comment follows any relevant requests in the issue thread and any contribution rules that apply to the proposed work. | required |
+```
+
+I added this check before the eval because even a clear plan can miss something the maintainer asks for. I made it required because those requests can affect whether the comment is ready to post.
 
 **Trade-offs**
 
-[Every check gives something up. Any one of these is a complete answer: a package whose
-result it changes, a canary you re-ran with `--only`, a case you accept it will miss, or a
-stated reason nothing changed elsewhere. "Nothing changed, and here is how I know" earns
-the point in full when the reason follows.]
+I kept the Plan comment check broad so it could apply to different repos. The trade-off is that it can miss a specific requirement, like the AI disclosure in `pkg-20`.
 
 ---
 
-Related paths: `plan.md` and `eval-run.txt` in this directory; your skill's files in
-`tools/plan-check/`.
+Related paths: `plan.md` and `eval-run.txt` in this directory, and the skill files in `tools/plan-check/`.
