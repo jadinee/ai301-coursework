@@ -15,15 +15,11 @@ label is not graded.
 
 **Pull request**
 
-[Link to the pull request you opened. It must be the pull request's own page on the Path
-Review repo, not your fork's branch page.]
+Pull request: https://github.com/codepath/pathreview-ai301-fa26-s3/pull/287
 
 **Branch**
 
-[The name of the branch the pull request comes from, exactly as it appears in your fork.
-The naming shape is a type prefix, then the issue number, then a short description. **The
-issue number in the branch name must be the number of the issue the pull request fixes** —
-a name carrying any other number does not satisfy this field.]
+Branch: fix/64-partial-overlap
 
 ## Eval iterations
 
@@ -32,29 +28,23 @@ fields.
 
 **Run history**
 
-[The agreement score of each run you did, in order. A single run is a complete answer if
-only one run occurred. **The last score in your list must match the agreement line in the
-`eval-run.txt` you committed** — that file is the record of your final run.]
+I ran the full eval once.
+
+`agreement: 18/20 scored items  (bar: 18/20: PASS)`
 
 **Package analysis**
 
-[Pick one scored package (`pkg-01` through `pkg-20` — the four `calib-` packages are never
-scored). Name it by id, say what your rubric decided and what the gold label said, and
-explain why your rubric read it that way.]
+For `pkg-08`, my rubric returned `reject`, and the expected verdict was `accept`. The eval reported `failed: Repo and thread requirements`. That check was required, so one failure was enough to reject the PR. The description did say “cheatsheets regenerated (no binding changes, no diff)” and “integration test added.” My check may have been too strict about how the PR documented those requirements.
 
 **Check rationale**
 
-[Quote one check from the `rubric.md` you uploaded to `tools/pr-precheck/`, exactly as it reads now.
-Then say why it reads that way — what you revised to get there, or what you rejected in
-favour of it.]
+> | Focus | Issue scope and all changed files and hunks | Every substantive edit belongs to the issue. The diff has no unrelated cleanup, debug leftovers, or abandoned code. | required |
+
+I carried the scope check forward from Unit 3. This time it checks the actual changes against the issue, so unrelated edits can hold up a PR even when the planned fix is there.
 
 **Trade-offs**
 
-[Every check gives something up. Any one of these is a complete answer: a package whose
-result it changes, a canary you re-ran with `--only`, a case you accept it will miss, or a
-stated reason nothing changed elsewhere. "Nothing changed, and here is how I know" earns
-the point in full when the reason follows.]
-
+The Focus check can flag a change that actually belongs in the PR. For example, if the fix makes a helper unnecessary, removing it might look unrelated unless I explain why.
 ---
 
 Related paths: `eval-run.txt` in this directory; your skill's files in
